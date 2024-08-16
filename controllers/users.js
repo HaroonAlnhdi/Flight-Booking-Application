@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password ,first_name,last_name,email,phone_number} = req.body;
 
     const existingUser = await User.findOne({ username });
 
@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(password, parseInt(process.env.SALT_ROUNDS));
 
-    const user = await User.create({ username, hashedPassword });
+    const user = await User.create({ username, hashedPassword ,first_name,last_name,email,phone_number});
 
     const token = jwt.sign(
       {
