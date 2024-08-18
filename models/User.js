@@ -54,7 +54,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   bookings: [bookingsSchema],
-  isAdmin: Boolean,
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
 });
 
 userSchema.set('toJSON', {
