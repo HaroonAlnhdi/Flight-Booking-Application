@@ -1,11 +1,11 @@
 // controllers/profiles.js
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
-const User = require('../models/user');
-const isOwner = require('../middleware/is-owner');
+const User = require("../models/user");
+const isOwner = require("../middleware/is-owner");
 
-router.get('/:userId', isOwner, async (req, res) => {
+router.get("/:userId", isOwner, async (req, res) => {
   try {
     // if (req.user.id !== req.params.userId) {
     //   return res.status(401).json({ error: 'Unauthorized' });
@@ -15,7 +15,7 @@ router.get('/:userId', isOwner, async (req, res) => {
 
     if (!user) {
       res.status(404);
-      throw new Error('Profile not found.');
+      throw new Error("Profile not found.");
     }
 
     res.json({ user });
