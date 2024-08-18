@@ -5,27 +5,27 @@ const tripSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    depAirport: {
+    dep_airport: {
         type: String,
         required: true,
     },
-    depAirportIATA: {
+    dep_airport_IATA: {
         type: String,
         required: true,
     },
-    arrAirport: {
+    arr_airport: {
         type: String,
         required: true,
     },
-    arrAirportIATA: {
+    arr_airport_IATA: {
         type: String,
         required: true,
     },
-    depDate: {
+    dep_date_time: {
         type: Date,
         required: true,
     },
-    arrDate: {
+    arr_date_time: {
         type: Date,
         required: true,
     },
@@ -37,11 +37,6 @@ const tripSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    tripClass: {
-        type: String,
-        enum: ['Economy','Business'],
-        required: true,
-    }
 });
 
 const Trip = new mongoose.model('Trip', tripSchema);
