@@ -8,7 +8,6 @@ router.post('/', async (req, res, next) => {
     try {
         const user = await  User.findById(req.user._id);
         const tripInfo = await Trip.findById(req.params.tripId);
-        console.log(req.params.tripId);
         if (!tripInfo) {
             throw new Error('Something went yikes');
         } 
@@ -23,11 +22,12 @@ router.post('/', async (req, res, next) => {
         };
         user.bookings.push(booking);
         await user.save();
-        res.status(201).json();
+        res.status(201).json(user);
     } catch (error) {
         console.error('Error details:', error);
         res.status(500).json({ error: error.message });
     }
 });
+
 
 module.exports = router;

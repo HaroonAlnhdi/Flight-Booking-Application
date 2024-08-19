@@ -41,4 +41,16 @@ router.delete("/:userId", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+router.delete('/:userId/bookings/:bookingId', async (req , res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const booking = user.bookings.id(req.params.bookingId);
+    booking.deleteOne();
+    await user.save();
+    res.status(200).json();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;
