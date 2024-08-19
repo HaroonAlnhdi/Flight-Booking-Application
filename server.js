@@ -1,14 +1,14 @@
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const cors = require('cors');
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const cors = require("cors");
 
 dotenv.config();
 
-require('./config/database');
-const express = require('express');
+require("./config/database");
+const express = require("express");
 
 // Auth
-const verifyToken = require('./middleware/verify-token');
+const verifyToken = require("./middleware/verify-token");
 
 // Controllers
 const testJWTRouter = require('./controllers/test-jwt');
@@ -21,7 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(express.json());
 
 // Routes
@@ -33,6 +33,6 @@ app.use('/trips', tripController);
 
 
 app.listen(PORT, () => {
-  console.log('The express app is ready!');
+  console.log("The express app is ready!");
 });
 
