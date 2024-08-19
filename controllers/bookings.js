@@ -1,5 +1,5 @@
 const express  = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 const User = require('../models/user');
 const Trip = require('../models/Trip');
@@ -8,7 +8,11 @@ router.post('/', async (req, res, next) => {
     try {
         const user = await  User.findById(req.user._id);
         const tripInfo = await Trip.findById(req.params.tripId);
-        if (!trip || !user) {
+        console.log(req.params.tripId);
+        if (!tripInfo) {
+            throw new Error('Something went yikes');
+        } 
+        if (!user) {
             throw new Error('Something went wrong');
         } 
         const booking = {
@@ -19,9 +23,10 @@ router.post('/', async (req, res, next) => {
         };
         user.bookings.push(booking);
         await user.save();
-        res.status(204).json();
+        res.status(201).json();
     } catch (error) {
-        res.status(500).json(error);
+        console.error('Error details:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 

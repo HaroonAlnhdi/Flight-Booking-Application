@@ -16,6 +16,7 @@ const bookingsSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
+    default: Date.now,
   },
   trip: {
     type: mongoose.Schema.Types.ObjectId,

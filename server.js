@@ -17,6 +17,7 @@ const profilesRouter = require('./controllers/profiles');
 const airportController = require('./controllers/airports');
 const tripController = require('./controllers/trips');
 const profileController = require('./controllers/profile');
+const bookingController = require('./controllers/bookings');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -25,15 +26,19 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Routes
+// Public
 app.use('/test-jwt', testJWTRouter);
 app.use('/users', usersRouter);
-app.use('/profiles', verifyToken, profilesRouter);
 app.use('/airports', airportController);
-app.use('/profile', profileController);
 app.use('/trips', tripController);
+
+// Private
+app.use(verifyToken)
+app.use('/profiles', profilesRouter);
+app.use('/profile', profileController);
+app.use('/trips/:tripId/bookings', bookingController);
 
 
 app.listen(PORT, () => {
   console.log("The express app is ready!");
 });
-
