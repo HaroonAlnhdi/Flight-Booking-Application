@@ -13,11 +13,6 @@ const bookingsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  tripClass: {
-    type: String,
-    enum: ["Economy", "Business"],
-    required: true,
-  },
   createdAt: {
     type: Date,
     required: true,
@@ -54,7 +49,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   bookings: [bookingsSchema],
-  isAdmin: Boolean,
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
 });
 
 userSchema.set('toJSON', {
