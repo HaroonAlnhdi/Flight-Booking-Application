@@ -1,7 +1,7 @@
 const express  = require('express');
 const router = express.Router();
 
-const User = require('../models/User');
+const User = require('../models/user');
 const Trip = require('../models/Trip');
 
 router.post('/', async (req, res, next) => {

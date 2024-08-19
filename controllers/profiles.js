@@ -2,7 +2,7 @@
 const express = require('express');
 
 const router = express.Router();
-const User = require('../models/User');
+const User = require('../models/user');
 const isOwner = require('../middleware/is-owner');
 
 router.get('/:userId', isOwner, async (req, res) => {
