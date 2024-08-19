@@ -20,8 +20,10 @@ router.post('/', async (req, res, next) => {
             price: tripInfo.price,
             trip: tripInfo._id
         };
+        tripInfo.tickets = tripInfo.tickets - 1;
         user.bookings.push(booking);
         await user.save();
+        await tripInfo.save();
         res.status(201).json(user);
     } catch (error) {
         console.error('Error details:', error);

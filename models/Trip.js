@@ -4,6 +4,7 @@ const tripSchema = new mongoose.Schema({
     tickets: {
         type: Number,
         required: true,
+        min: 0
     },
     dep_airport: {
         type: String,
