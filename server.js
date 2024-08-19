@@ -16,6 +16,7 @@ const usersRouter = require('./controllers/users');
 const profilesRouter = require('./controllers/profiles');
 const airportController = require('./controllers/airports');
 const tripController = require('./controllers/trips');
+const bookingController = require('./controllers/bookings');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use('/users', usersRouter);
 app.use('/profiles', verifyToken, profilesRouter);
 app.use('/airports', airportController);
 app.use('/trips', tripController);
+app.use('/trips/:tripId/bookings',verifyToken, bookingController);
 
 
 app.listen(PORT, () => {

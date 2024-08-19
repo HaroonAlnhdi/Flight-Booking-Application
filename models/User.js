@@ -13,14 +13,10 @@ const bookingsSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  tripClass: {
-    type: String,
-    enum: ["Economy", "Business"],
-    required: true,
-  },
   createdAt: {
     type: Date,
     required: true,
+    default: Date.now 
   },
   trip: {
     type: mongoose.Schema.Types.ObjectId,
