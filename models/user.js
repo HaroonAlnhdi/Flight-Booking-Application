@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const bookingsSchema = new mongoose.Schema({
-  tickets: {
+  Qty: {
     type: Number,
     required: true,
-    min: 0
+    min: 1,
   },
   depTripDate: {
     type: Date,
