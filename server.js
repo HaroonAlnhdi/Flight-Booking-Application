@@ -33,12 +33,13 @@ app.use("/test-jwt", testJWTRouter);
 app.use("/users", usersRouter);
 app.use("/airports", airportController);
 app.use("/trips", tripController);
+app.use("/contactUs", contactUsController);
 
 // Private
 app.use(verifyToken);
 app.use("/profile", profileController);
 app.use("/booking", bookingController);
-app.use("/contactUs", contactUsController);
+
 app.listen(PORT, () => {
   console.log("The express app is ready!");
 });
