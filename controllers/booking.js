@@ -14,14 +14,20 @@ router.post("/:tripId", async (req, res, next) => {
     if (!user) {
       throw new Error("Something went wrong");
     }
+
+    const { Qty } = req.body;
+    if (!Qty || Qty <= 0) {
+      throw new Error("Invalid quantity");
+    }
+
     const booking = {
-      Qty: 1,
+      Qty,
       depTripDate: tripInfo.dep_date_time,
       arrTripDate: tripInfo.arr_date_time,
       price: tripInfo.price,
       trip: tripInfo._id,
     };
-    tripInfo.tickets = tripInfo.tickets - user.bookings.Qty;
+    tripInfo.tickets -= Qty;
     user.bookings.push(booking);
     await user.save();
     await tripInfo.save();
