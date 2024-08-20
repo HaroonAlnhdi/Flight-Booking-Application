@@ -9,11 +9,11 @@ const express = require("express");
 
 // Auth
 const verifyToken = require("./middleware/verify-token");
+const isOwner = require("../middleware/is-owner");
 
 // Controllers
 const testJWTRouter = require("./controllers/test-jwt");
 const usersRouter = require("./controllers/users");
-const profilesRouter = require("./controllers/profiles");
 const airportController = require("./controllers/airports");
 const tripController = require("./controllers/trips");
 const profileController = require("./controllers/profile");
@@ -34,8 +34,7 @@ app.use("/trips", tripController);
 
 // Private
 app.use(verifyToken);
-app.use("/profiles", profilesRouter);
-app.use("/profile", profileController);
+app.use("/profile", isOwner ,profileController);
 app.use("/booking", bookingController);
 
 app.listen(PORT, () => {

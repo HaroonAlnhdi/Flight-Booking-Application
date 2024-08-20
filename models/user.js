@@ -4,14 +4,7 @@ const bookingsSchema = new mongoose.Schema({
   tickets: {
     type: Number,
     required: true,
-  },
-  dep_airport: {
-    type: String,
-    required: true,
-  },
-  arr_airport: {
-    type: String,
-    required: true,
+    min: 0
   },
   depTripDate: {
     type: Date,
@@ -20,10 +13,6 @@ const bookingsSchema = new mongoose.Schema({
 
   arrTripDate: {
     type: Date,
-    required: true,
-  },
-  duration: {
-    type: Number,
     required: true,
   },
   price: {
