@@ -5,10 +5,11 @@ const jwt = require("jsonwebtoken");
 
 // Models
 const User = require("../models/user");
+const isOwner = require("../middleware/is-owner");
 
 const router = express.Router();
 
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", isOwner, async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) {
@@ -20,7 +21,7 @@ router.get("/:userId", async (req, res) => {
     res.status(500).json(error);
   }
 });
-router.put("/:userId", async (req, res) => {
+router.put("/:userId", isOwner, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
@@ -35,7 +36,7 @@ router.put("/:userId", async (req, res) => {
   }
 });
 
-router.delete("/:userId", async (req, res) => {
+router.delete("/:userId", isOwner, async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.userId);
 
@@ -46,15 +47,19 @@ router.delete("/:userId", async (req, res) => {
   }
 });
 
-router.delete('/:userId/bookings/:bookingId', async (req , res, next) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    const booking = user.bookings.id(req.params.bookingId);
-    booking.deleteOne();
-    await user.save();
-    res.status(200).json();
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+router.delete(
+  "/:userId/bookings/:bookingId",
+  isOwner,
+  async (req, res, next) => {
+    try {
+      const user = await User.findById(req.params.userId);
+      const booking = user.bookings.id(req.params.bookingId);
+      booking.deleteOne();
+      await user.save();
+      res.status(200).json();
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
-});
+);
 module.exports = router;
