@@ -1,12 +1,29 @@
 const mongoose = require("mongoose");
 
 const bookingsSchema = new mongoose.Schema({
+  tickets: {
+    type: Number,
+    required: true,
+  },
+  dep_airport: {
+    type: String,
+    required: true,
+  },
+  arr_airport: {
+    type: String,
+    required: true,
+  },
   depTripDate: {
     type: Date,
     required: true,
   },
+
   arrTripDate: {
     type: Date,
+    required: true,
+  },
+  duration: {
+    type: Number,
     required: true,
   },
   price: {
@@ -52,15 +69,15 @@ const userSchema = new mongoose.Schema({
   bookings: [bookingsSchema],
   isAdmin: {
     type: Boolean,
-    default: false
+    default: false,
   },
 });
 
-userSchema.set('toJSON', {
-    transform: (doc, obj) => {
-      delete obj.hashedPassword;
-    },
-  });
+userSchema.set("toJSON", {
+  transform: (doc, obj) => {
+    delete obj.hashedPassword;
+  },
+});
 
 const User = mongoose.model("User", userSchema);
 
