@@ -18,6 +18,8 @@ const airportController = require("./controllers/airports");
 const tripController = require("./controllers/trips");
 const profileController = require("./controllers/profile");
 const bookingController = require("./controllers/booking");
+const contactUsController = require("./controllers/contactUs");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -36,7 +38,7 @@ app.use("/trips", tripController);
 app.use(verifyToken);
 app.use("/profile", profileController);
 app.use("/booking", bookingController);
-
+app.use("/contactUs", contactUsController);
 app.listen(PORT, () => {
   console.log("The express app is ready!");
 });
