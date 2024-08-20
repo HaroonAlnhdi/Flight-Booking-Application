@@ -15,13 +15,13 @@ router.post("/:tripId", async (req, res, next) => {
       throw new Error("Something went wrong");
     }
     const booking = {
-      tickets: 1, // Number of tickets TODO: how to add more?
+      Qty: 1,
       depTripDate: tripInfo.dep_date_time,
       arrTripDate: tripInfo.arr_date_time,
       price: tripInfo.price,
       trip: tripInfo._id,
     };
-    tripInfo.tickets = tripInfo.tickets - 1;
+    tripInfo.tickets = tripInfo.tickets - user.bookings.Qty;
     user.bookings.push(booking);
     await user.save();
     await tripInfo.save();
