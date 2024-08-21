@@ -9,10 +9,10 @@ router.post("/:tripId", async (req, res, next) => {
     const user = await User.findById(req.user._id);
     const tripInfo = await Trip.findById(req.params.tripId);
     if (!tripInfo) {
-      throw new Error("Something went wrong");
+      throw new Error("Trip not found");
     }
     if (!user) {
-      throw new Error("Something went wrong");
+      throw new Error("User not found");
     }
 
     const { Qty } = req.body;
@@ -20,17 +20,27 @@ router.post("/:tripId", async (req, res, next) => {
       throw new Error("Invalid quantity");
     }
 
-    const booking = {
-      Qty,
-      depTripDate: tripInfo.dep_date_time,
-      arrTripDate: tripInfo.arr_date_time,
-      price: tripInfo.price,
-      trip: tripInfo._id,
-    };
+    const existingBooking = user.bookings.find(
+      (booking) => booking.trip.toString() === tripInfo._id.toString()
+    );
+
+    if (existingBooking) {
+      existingBooking.Qty += Qty;
+    } else {
+      const booking = {
+        Qty,
+        depTripDate: tripInfo.dep_date_time,
+        arrTripDate: tripInfo.arr_date_time,
+        price: tripInfo.price,
+        trip: tripInfo._id,
+      };
+      user.bookings.push(booking);
+    }
+
     tripInfo.tickets -= Qty;
-    user.bookings.push(booking);
     await user.save();
     await tripInfo.save();
+
     res.status(201).json(user);
   } catch (error) {
     console.error("Error details:", error);
