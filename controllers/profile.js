@@ -11,7 +11,13 @@ const router = express.Router();
 
 router.get("/:userId", isOwner, async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.userId).populate({
+      path: 'bookings',
+      populate: {
+        path: 'trip',
+        model: 'Trip'
+      }
+    });
     if (!user) {
       res.status(404);
       throw new Error("Something went wrong");
