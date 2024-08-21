@@ -12,11 +12,11 @@ const router = express.Router();
 router.get("/:userId", isOwner, async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate({
-      path: 'bookings',
+      path: "bookings",
       populate: {
-        path: 'trip',
-        model: 'Trip'
-      }
+        path: "trip",
+        model: "Trip",
+      },
     });
     if (!user) {
       res.status(404);
@@ -62,10 +62,11 @@ router.delete(
       const booking = user.bookings.id(req.params.bookingId);
       booking.deleteOne();
       await user.save();
-      res.status(200).json();
+      res.status(200).json({ message: "Booking deleted successfully" });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
 );
+
 module.exports = router;
